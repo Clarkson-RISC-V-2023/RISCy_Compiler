@@ -1,0 +1,8 @@
+[submodule "riscv-opcodes"]
+	path = riscv-opcodes-repo
+	url = git@github.com:Clarkson-RISC-V-2023/riscv-opcodes.git
+	branch = master
+[submodule "riscv-gnu-toolchain"]
+	path = riscv-gnu-toolchain-repo
+	url = git@github.com:Clarkson-RISC-V-2023/riscv-gnu-toolchain.git
+	branch = master
