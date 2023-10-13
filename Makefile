@@ -1,14 +1,22 @@
 .PHONY:
 
-C_FILE 			= ./src/test.c
+C_FILE 			= ./src/test-2.c
 OUT_DIR 		= ./out
 OUT_FILE_NAME 	= RISCy
 COMPILE_FLAGS	= -march=rv32i -mabi=ilp32
 
-all: clean assembly cobject linkforELF ELFtoBin BintoHex move
+new: clean showhex move
+
+all: clean assembly cobject linkforELF ELFtoBin BintoHex hex move 
 
 assembly:
 	riscv32-unknown-linux-gnu-gcc -S $(COMPILE_FLAGS) -c $(C_FILE) -o $(OUT_FILE_NAME).s
+
+hex: assembly
+	riscv32-unknown-linux-gnu-as $(OUT_FILE_NAME).s -o $(OUT_FILE_NAME)
+
+showhex: hex
+	riscv32-unknown-linux-gnu-objdump -D $(OUT_FILE_NAME)
 
 cobject:
 	riscv32-unknown-linux-gnu-gcc $(COMPILE_FLAGS) -c $(C_FILE) -o $(OUT_FILE_NAME).o
