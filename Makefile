@@ -1,11 +1,14 @@
 .PHONY:
 
 C_FILE 			= ./src/test-2.c
+PP  			= python3 ./PostProcessingTools/gpp
+INSTRUCTIONS    = ./PostProcessingTools/instruction_lib.txt
+MEM_INIT		= mem_init
 OUT_DIR 		= ./out
 OUT_FILE_NAME 	= RISCy
 COMPILE_FLAGS	= -march=rv32i -mabi=ilp32
 
-new: clean showhex move
+output: mem_init
 
 all: clean assembly cobject linkforELF ELFtoBin BintoHex hex move 
 
@@ -17,6 +20,11 @@ hex: assembly
 
 showhex: hex
 	riscv32-unknown-linux-gnu-objdump -D $(OUT_FILE_NAME)
+
+mem_init: hex
+	riscv32-unknown-linux-gnu-objdump -D $(OUT_FILE_NAME) > tmp.txt
+	$(PP) tmp.txt -o $(MEM_INIT) -i $(INSTRUCTIONS)
+	rm -rf tmp.txt
 
 cobject:
 	riscv32-unknown-linux-gnu-gcc $(COMPILE_FLAGS) -c $(C_FILE) -o $(OUT_FILE_NAME).o
@@ -41,5 +49,6 @@ move:
 clean:
 	rm -rf $(OUT_DIR)
 	rm -rf *.s *.o *.elf $(OUT_FILE_NAME)*
+	rm -rf mem_init
 
 	
