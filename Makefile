@@ -1,6 +1,6 @@
 .PHONY:
 
-C_FILE 			= ./src/test-2.c
+C_FILE 			= ./src/blinky.c
 PP  			= python3 ./PostProcessingTools/gpp
 INSTRUCTIONS    = ./PostProcessingTools/instruction_lib.txt
 MEM_INIT		= mem_init
