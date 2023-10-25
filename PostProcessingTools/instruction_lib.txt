@@ -47,6 +47,7 @@ div
 divu
 rem
 remu
+ret
 
 flw
 fsw
