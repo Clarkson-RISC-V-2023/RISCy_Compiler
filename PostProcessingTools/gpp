@@ -127,7 +127,7 @@ print(floatByte)
 for i in range(0, 4):
     with open(("ram"+str(i+1)), "w") as f:
         for j in range(int(len(floatByte)/4)):
-            f.write(floatByte[(j*4)+i])
+            f.write(bin(int(floatByte[(j*4)+i], 16))[2:].zfill(8))
             f.write("\n")
         f.close()
 

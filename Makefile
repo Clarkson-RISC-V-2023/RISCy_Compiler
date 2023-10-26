@@ -22,7 +22,7 @@ showhex: link
 mem_init: link
 	riscv32-unknown-linux-gnu-objdump -D $(OUT_FILE_NAME).bin > tmp.txt
 	$(PP) tmp.txt -o $(MEM_INIT) -i $(INSTRUCTIONS)
-	rm -rf tmp.txt
+	#rm -rf tmp.txt
 
 clean:
 	rm -rf *.s *.o *.elf $(OUT_FILE_NAME)*
