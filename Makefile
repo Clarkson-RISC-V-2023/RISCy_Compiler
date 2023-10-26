@@ -24,7 +24,7 @@ showhex: hex
 mem_init: hex
 	riscv32-unknown-linux-gnu-objdump -D $(OUT_FILE_NAME) > tmp.txt
 	$(PP) tmp.txt -o $(MEM_INIT) -i $(INSTRUCTIONS)
-	rm -rf tmp.txt
+	#rm -rf tmp.txt
 
 cobject:
 	riscv32-unknown-linux-gnu-gcc $(COMPILE_FLAGS) -c $(C_FILE) -o $(OUT_FILE_NAME).o

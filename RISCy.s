@@ -19,7 +19,7 @@ main:
 	fsw	fa5,-24(s0)
 	flw	fa4,-20(s0)
 	flw	fa5,-24(s0)
-	fmul.s	fa5,fa4,fa5
+	fadd.s	fa5,fa4,fa5
 	fsw	fa5,-28(s0)
 	li	a5,0
 	mv	a0,a5

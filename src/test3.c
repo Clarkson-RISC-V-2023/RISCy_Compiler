@@ -3,7 +3,7 @@ int main() {
     float y = 1.2;
     float z;
 
-    z = x * y;
+    z = x + y;
 
     // int a = 1;
 
