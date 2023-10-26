@@ -1,12 +1,12 @@
 .PHONY: all
 
-C_FILE 			= ./src/blinky.c
+C_FILE 			= ./src/test3.c
 PP  			= python3 ./PostProcessingTools/gpp
 INSTRUCTIONS    = ./PostProcessingTools/instruction_lib.txt
 MEM_INIT		= mem_init
 OUT_DIR 		= ./out
 OUT_FILE_NAME 	= RISCy
-COMPILE_FLAGS	= -march=rv32i -mabi=ilp32
+COMPILE_FLAGS	= -march=rv32imf -mabi=ilp32
 
 all: mem_init
 
