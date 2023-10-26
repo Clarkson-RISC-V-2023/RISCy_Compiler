@@ -49,6 +49,9 @@ for i in range(len(file_data)):
 
 actual_data = file_data[mark_start:mark_end]
 instructions = []
+floatByte = []
+firstTimeFlag = 0
+baseOffsetToSubtract = 0
 for item in actual_data:
     result = item.split(":")
 
@@ -57,7 +60,55 @@ for item in actual_data:
         if instruc_name[0] in supported_instr:
             instruction = result[1][1:9]
             
-            
+            #find "zero" text in "flw	fa5,64(zero)"
+            #and take 64 if this is the first instance, 
+            #and change this 64 to 0
+            #
+            #then next iteration should take flw	fa5,68(zero) 
+            #and do (68 - 64 = 4) and set 4 as the new address offset
+            #
+            #[we are trying to write hard-coded
+            # float data from the C program 
+            # into the LSU from the 0 address, going up]
+            #
+            # This is done because we do not have a normal memory stack 
+            # where all memory modules addresses are connected/continous
+            if instruc_name[0] == "flw" and "zero" in instruc_name[1]:
+                #print("we in, delete me")
+                if firstTimeFlag == 0:
+                    #print(instruc_name[0])
+                    #print(instruc_name[1])
+                    baseOffsetToSubtract = instruc_name[1][4:-6]
+                    
+                    #print(baseOffsetToSubtract)
+                    #print(instruction)
+                    #print()
+                    
+                    #offsetBin = bin(int(instruction, 16))[2:].zfill(32)[0:12] #extract offset
+                    #newOffset = offsetBin
+                    #print(newOffset)
+
+                    #print(bin(int(instruction, 16))[2:].zfill(32))
+                    #print(bin(0x000FFFFF)[2:].zfill(32)) 
+                    #print(bin(int(bin(int(instruction, 16))[2:].zfill(32)) & 0x000FFFFF   )[2:].zfill(32))
+
+                    #print(instruction[3:])
+                    instruction = "000" + instruction[3:]
+                    #print(instruction)
+                    #print()
+
+                    firstTimeFlag = 1
+                else:
+                    thisOffset = instruc_name[1][4:-6]
+                    newOffset = int(thisOffset) - int(baseOffsetToSubtract)
+                    #print(newOffset)
+                    newOffset = hex(newOffset)
+                    #print(newOffset)
+                    #print(newOffset[2:].zfill(3))
+                    #print(instruction) 
+                    instruction = newOffset[2:].zfill(3) + instruction[3:]
+                    #print(instruction) 
+
 
             instructions = instructions + [
                 bin(int(instruction, 16))[2:].zfill(32)
@@ -65,8 +116,20 @@ for item in actual_data:
             
         elif warning_flag != None:
             print('\033[93m' + "WARNING: Removed instruction \"" + instruc_name[0] + "\" at " + result[0].strip() + '\033[0m', file=sys.stderr)
-            print(instruc_name)
+            if instruc_name[0] == ".2byte":
+                print(instruc_name)
+                floatByte.append(instruc_name[1][2:].zfill(4)[2:])  #each twoBytes element is 2 bytes
+                floatByte.append(instruc_name[1][2:].zfill(4)[:2])
+            
 
+print(floatByte)
+#print(instructions) #delete me after
+for i in range(0, 4):
+    with open(("ram"+str(i+1)), "w") as f:
+        for j in range(int(len(floatByte)/4)):
+            f.write(floatByte[(j*4)+i])
+            f.write("\n")
+        f.close()
 
 with open(output_file, "w") as f:
     f.writelines("\n".join(instructions))

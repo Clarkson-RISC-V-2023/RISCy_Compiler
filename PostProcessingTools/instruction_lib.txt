@@ -64,5 +64,3 @@ fmv.x.w
 feq.s
 flt.s
 fle.s
-
-.2byte
