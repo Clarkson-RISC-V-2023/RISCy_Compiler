@@ -1,4 +1,4 @@
-//used this website: https://www.h-schmidt.net/FloatConverter/IEEE754.html
+//IEEE754
 #define FLOAT_1 0x40490fd0
 #define FLOAT_2 0x3f99999a
 
@@ -9,16 +9,6 @@ int main() {
     float y = get_float(FLOAT_2);
 
     float z = x + y;
-
-    
-    // THE BASIC IDEA:
-    // int* x = 0;
-    // float* y = x; 
-    // *(x) = 0x40490fd0; 
-    // z = *(y);
-
-    
-    
 
     return 0;
 }
