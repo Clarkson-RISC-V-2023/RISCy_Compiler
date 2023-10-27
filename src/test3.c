@@ -1,14 +1,42 @@
+//used this website: https://www.h-schmidt.net/FloatConverter/IEEE754.html
+#define FLOAT_1 0x40490fd0
+#define FLOAT_2 0x3f99999a
+
+float get_float(int val);
+
 int main() {
-    float x = 3.14159;
-    float y = 1.2;
-    float z;
+    float x = get_float(FLOAT_1);
+    float y = get_float(FLOAT_2);
 
-    z = x + y;
+    float z = x + y;
 
-    // int a = 1;
+    
+    // THE BASIC IDEA:
+    // int* x = 0;
+    // float* y = x; 
+    // *(x) = 0x40490fd0; 
+    // z = *(y);
 
-    // float x = (float)a;
-
+    
+    
 
     return 0;
+}
+
+float get_float(int val)
+{
+    // Getting the Current Value at 0x0
+    int* tmp_int = 0;
+    float* tmp_float = 0;
+    int curr_int = *tmp_int;
+
+    // Setting/Reading the value
+    *tmp_int = val;
+    float tmp = *(tmp_float);
+
+    // Returning the Memory Configuration
+    *tmp_int = curr_int;
+
+    // Returning the constructed float
+    return tmp;
 }
