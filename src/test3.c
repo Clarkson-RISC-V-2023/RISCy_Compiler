@@ -1,6 +1,6 @@
 //IEEE754
-#define FLOAT_1 0x40490fd0
-#define FLOAT_2 0x3f99999a
+#define FLOAT_1 0x3f800000
+#define FLOAT_2 0x3f800000
 
 float get_float(int val);
 
@@ -8,7 +8,7 @@ int main() {
     float x = get_float(FLOAT_1);
     float y = get_float(FLOAT_2);
 
-    float z = x + y;
+    float z = x * y;
 
     return 0;
 }
