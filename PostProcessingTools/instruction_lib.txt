@@ -5,6 +5,7 @@ j
 jalr
 beq
 bne
+bnez
 blt
 bge
 bltu
@@ -38,6 +39,7 @@ or
 and
 mv
 li
+nop
 
 mul
 mulh

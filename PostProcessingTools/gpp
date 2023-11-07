@@ -59,6 +59,8 @@ for item in actual_data:
             instructions = instructions + [
                 bin(int(instruction, 16))[2:].zfill(32)
             ]
+        elif warning_flag != None:
+            print('\033[93m' + "WARNING: Removed instruction \"" + instruc_name[0] + "\" at " + result[0].strip() + '\033[0m', file=sys.stderr)
 
 
 with open(output_file, "w") as f:
